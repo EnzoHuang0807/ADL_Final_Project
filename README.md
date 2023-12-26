@@ -1,5 +1,7 @@
 # ADL_Final_Project
 
+[Slide](https://docs.google.com/presentation/d/1fx9ZbUw5NwrnNM_ToqwlM_iU8U4HYBtASFuQzpZ0l9U/edit?fbclid=IwAR23NHN6lBcsUm-KmlHzaC3VZ6hLrHbPaJmPLwZ8XHgaDYoR6csOXgUn7zM#slide=id.g2649c5aaa7d_3_500)
+
 ## Cosine Similarity
 
 ```
@@ -8,6 +10,47 @@ pip install tensorflow tensorflow_hub
 python classify.py
 ```
 the result is stored at **similar_pair.json**
+
+## GCG Experiment
+
+```
+cd GCG
+```
+
+* Download Model
+```
+python3 download_models.py
+```
+
+* Environment
+```
+pip install -e .
+pip install livelossplot
+```
+
+* Data
+Our orginal data is llm-attachs-main/data/similar_pair.json. By the following instruction, we can transfer the json file to 3 csv files. 
+```
+cd data
+python3 add_newgoal.py
+python3 transform_to_csv.py
+```
+
+* Train
+```
+cd launch_script
+bash run_individual.sh vicuna behaviors path/to/your/training_data.csv path/to/your/result_folder
+```
+
+* Result
+```
+cd result
+python3 add_result.py path/to/your/first_result_folder '../../data/similar_pair.json' 'origin_result.json'
+python3 add_result.py path/to/your/second_result_folder '../../data/origin_result.json' 'similar_result.json'
+python3 add_result.py path/to/your/third_result_folder '../../data/similar_result.json' 'gcg_result.json'
+```
+The gcg_result.json will be the final result.
+
 
 ## AutoDAN and Evaluation
 
